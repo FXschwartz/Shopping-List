@@ -7,7 +7,8 @@ app.controller('MainCtrl', function($scope) {
 		{id:2, text:'Ice Cream',	price:5.63,	quantity:4},
 		{id:3, text:'Peaches',		price:2.89,	quantity:2}
 	];
-
+	
+	
 	$scope.nextId = $scope.items.length + 1;
 	
 	
@@ -30,7 +31,16 @@ app.controller('MainCtrl', function($scope) {
 
 	$scope.isItemBought = function(item) {
 		return (item.bought) ? 'bought' : 'not-bought';
-	};
-	
+	}; 
+
+	$scope.calcTotal= function() {
+            var total = 0;
+            for (i=0; i<$scope.items.length; i++){
+                total+= $scope.items[i].price * $scope.items[i].quantity * $scope.taxRate;
+            }
+
+            return total;
+        }
+
 
 });

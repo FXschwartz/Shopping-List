@@ -35,8 +35,8 @@
 							<input type="number" class="form-control" placeholder="Qty" ng-model="quantityEntry" style="width:100px;">
 						</div>	
 						<button type="button" class="btn btn-success" ng-click="addItem()" >Submit</button>
-						<nav class="navbar navbar-fixed-top">
-							<input class="form-control" type="text" placeholder="Total" readonly >
+						<nav class="navbar navbar-fixed-top" >
+							<input class="form-control" type="text" placeholder="{{calcTotal() | currency}}" readonly >
 							<data-offset-top="50">	
 						</nav>
 					</form>	
@@ -71,7 +71,7 @@
 								<td>{{item.text}}</td>
 								<td>{{item.price | currency}}</td>
 								<td>{{item.quantity}}</td>
-								<td>{{item.price*item.quantity | currency}}</td>
+								<td>{{item.price * item.quantity | currency}}</td>
 								<td>{{item.price*item.quantity*taxRate | currency}}</td>
 							</tr>
 						</tbody>
