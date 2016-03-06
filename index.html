@@ -12,12 +12,14 @@
 		.col-sm-12 {text-align:center;}
 		th {text-align:center;}
 		td {}
+		tr.bought td:not(.no-strike) {text-decoration:line-through;}
 	</style>
 	<title>My Shopping List</title>
 				    
 </head>
 	<body ng-controller = "MainCtrl">
 		<div class = "container-fluid">
+			<br><br>
 			<h1 class = "heading">My Shopping List</h1>
 			<br><br>
 			<div class = "row">
@@ -33,11 +35,10 @@
 							<input type="number" class="form-control" placeholder="Qty" ng-model="quantityEntry" style="width:100px;">
 						</div>	
 						<button type="button" class="btn btn-success" ng-click="addItem()" >Submit</button>
-						<div>
-							<data-spy="affix">
+						<nav class="navbar navbar-fixed-top">
 							<input class="form-control" type="text" placeholder="Total" readonly >
 							<data-offset-top="50">	
-						</div>
+						</nav>
 					</form>	
 				</div>	
 			</div>
@@ -53,60 +54,26 @@
 								<th>Item</th>
 								<th>Price</th>
 								<th>Quantity</th>
-								<th>Price  With Tax</th>
+								<th>Total</th>
+								<th>Price w/ Tax</th>
 							</tr>
 						</thead>
 						<tbody >
-							<tr ng-repeat="item in items">
-								<td>
-									<button type="button" id="cross" class="btn btn-danger btn-xs" style="width:15;height:30px;" ng-click="clearBought()">								
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							<tr ng-repeat="item in items" ng-class="isItemBought(item)">
+								<td class="no-strike">
+									<button type="button" class="btn btn-danger btn-xs" style="width:15;height:30px; margin-right:10px;" ng-click="deleteItem(item)">								
+										<span class="glyphicon glyphicon-remove"></span>
 									</button>
-									&nbsp;
-									&nbsp;
-									<button type="button" id="item-{{item.id}}" class="btn btn-success btn-xs" style="width:15;height:30px;" ng-model="item.bought">								
-										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<button type="button" class="btn btn-success btn-xs" style="width:15;height:30px;" ng-click="buyItem(item)">			
+										<span class="glyphicon glyphicon-ok"></span>
 									</button>
 								</td>
-								<td ng-model="itemBought" class="{{isBought(item.bought)}}">{{item.text}}</td>
+								<td>{{item.text}}</td>
 								<td>{{item.price | currency}}</td>
-								<td>{{item.quantity}}</td> 
-								<td>{{item.priceWtax | currency}} </td>
+								<td>{{item.quantity}}</td>
+								<td>{{item.price*item.quantity | currency}}</td>
+								<td>{{item.price*item.quantity*taxRate | currency}}</td>
 							</tr>
-							<!--<!--<tr>
-								<td>
-									<button type="button" id="cross" class="btn btn-danger btn-xs" style="width:15;height:30px;" ng-click="clearBought()">								
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									</button>
-									&nbsp;
-									&nbsp;
-									<button type="button" id="item-{{item.id}}" class="btn btn-success btn-xs" style="width:15;height:30px;" ng-model="item.bought">								
-										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-									</button>
-								</td>
-								<td>Ice Cream</td>
-								<td>$</td>
-								<td>#</td>
-								<td>$</td>
-
-							</tr>
-							<tr>
-								<td>
-									<button type="button" id="cross" class="btn btn-danger btn-xs" style="width:15;height:30px;" ng-click="clearBought()">								
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									</button>
-									&nbsp;
-									&nbsp;
-									<button type="button" id="item-{{item.id}}" class="btn btn-success btn-xs" style="width:15;height:30px;" ng-model="item.bought">								
-										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-									</button>
-								</td>
-								<td>Peaches</td>
-								<td>$</td>
-								<td>#</td>
-								<td>$</td>
-							</tr>-->-->
-							
 						</tbody>
 					</table>
 				</div>
