@@ -1,20 +1,42 @@
 var app = angular.module('app', []);
 
-app.controller('MainCtrl', function($scope) {
+app.controller('MainCtrl', function($scope,$http) {
+	function getItems() {
+		console.log('getItems()');
+		$http.get('/api/items').success(function(items) {
+// 			console.log('\titems = %o', items);
+			$scope.items = items;
+		}).error(function(err) {
+			console.log('\tOpps!  Error!  %o', err);
+		});
+	}
+
 	$scope.taxRate = 1.08517;
-	$scope.items = [
-		{id:1, text:'Frozen Pizza',	price:7.98,	quantity:1},
-		{id:2, text:'Ice Cream',	price:5.63,	quantity:4},
-		{id:3, text:'Peaches',		price:2.89,	quantity:2}
-	];
-	
-	
-	$scope.nextId = $scope.items.length + 1;
-	
-	
+// 	$scope.items = [
+// 		{id:1, text:'Frozen Pizza',	price:7.98,	quantity:1},
+// 		{id:2, text:'Ice Cream',	price:5.63,	quantity:4},
+// 		{id:3, text:'Peaches',		price:2.89,	quantity:2}
+// 	];
+// 	
+// 	
+// 	$scope.nextId = $scope.items.length + 1;
+// 	
+// 	
 	$scope.addItem = function() {
-		$scope.items.push({text: $scope.itemEntry, price:$scope.priceEntry, quantity:$scope.quantityEntry, id: ($scope.nextId)});
-		$scope.nextId++;
+		var newItem = {
+			text:		$scope.itemEntry,
+			price:		$scope.priceEntry,
+			quantity:	$scope.quantityEntry
+		};
+		console.log('addItem()\t newItem=%o', newItem);
+		$http.post('/api/new', newItem).success(function(items) {
+			console.log('\titems = %o', items);
+			getItems();
+		});
+		
+		/*
+		$scope.items.push();
+		$scope.nextId++;*/
 		$scope.priceEntry = 0;
 		$scope.quantityEntry = 0;
 		$scope.itemEntry = '';
@@ -33,14 +55,14 @@ app.controller('MainCtrl', function($scope) {
 		return (item.bought) ? 'bought' : 'not-bought';
 	}; 
 
-	$scope.calcTotal= function() {
-            var total = 0;
-            for (i=0; i<$scope.items.length; i++){
-                total+= $scope.items[i].price * $scope.items[i].quantity * $scope.taxRate;
-            }
+	$scope.calcTotal = function() {
+		var total = 0;
+		for (i=0; i<$scope.items.length; i++){
+			total+= $scope.items[i].price * $scope.items[i].quantity * $scope.taxRate;
+		}
 
-            return total;
-        }
+		return total;
+	};
 
-
+	getItems();
 });

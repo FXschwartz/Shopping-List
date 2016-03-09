@@ -34,7 +34,7 @@
 						<div class="form-group">
 							<input type="number" class="form-control" placeholder="Qty" ng-model="quantityEntry" style="width:100px;">
 						</div>	
-						<button type="button" class="btn btn-success" ng-click="addItem()" >Submit</button>
+						<button type="button" class="btn btn-success" ng-click="addItem()" ng-disabled="!itemEntry">Submit</button>
 						<nav class="navbar navbar-fixed-top" >
 							<input class="form-control" type="text" placeholder="{{calcTotal() | currency}}" readonly >
 							<data-offset-top="50">	
