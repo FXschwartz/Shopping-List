@@ -1,0 +1,22 @@
+{
+  "name": "shoppingList",
+  "homepage": "https://github.com/FXschwartz/Shopping-List",
+  "authors": [
+    "preston <FX_schwartz505@yahoo.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.0"
+  }
+}
